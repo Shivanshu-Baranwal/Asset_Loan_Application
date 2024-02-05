@@ -1,0 +1,95 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.gs.proto";
+option java_outer_classname = "LoanAssetGrpcProto";
+
+// Package declaration for the generated Java classes
+package com.gs.proto;
+
+service LoanAsset{
+  //Create Transaction
+  rpc createTransaction(CreateTransactionRequest) returns (CreateTransactionResponse){}
+  //Update Transaction
+  rpc updateTransaction(UpdateTransactionRequest) returns (APIResponse){}
+  //Get Loan By transactionId
+  rpc getTransactionById(FetchTransactionRequest) returns (Transaction){}
+  //Delete Loan By transactionId
+  rpc deleteTransaction(FetchTransactionRequest) returns (APIResponse){}
+
+  rpc getAll(FetchAllTransactionRequest) returns (TransactionResponse){}
+
+  rpc filterTransactions(FilterTransactionRequest)returns(TransactionResponse){}
+
+}
+
+message CreateTransactionRequest{
+  string student_id = 1;
+  string supervisor_id = 2;
+  string asset_id = 3;
+  string loan_date = 4;
+  string type = 5;
+  string transaction_id = 6;
+  string return_supervisor_id = 7;
+  string return_date = 8;
+}
+
+message CreateTransactionResponse{
+  string transactionId = 1;
+  string responseMessage = 2;
+  uint64 responseCode = 3;
+}
+
+message APIResponse{
+  string responseMessage = 1;
+  uint64 responseCode = 2;
+}
+
+message UpdateTransactionRequest{
+  string transaction_id = 1;
+  string type = 2;
+  NewObject newObj = 3;
+}
+
+message NewObject{
+  string student_id = 1;
+  string supervisor_id = 2;
+  string asset_id = 3;
+  string loan_date = 4;
+  string return_supervisor_id = 5;
+  string return_date = 6;
+}
+
+
+message FetchTransactionRequest{
+  string transaction_id = 1;
+  string type = 2;
+}
+
+message FetchAllTransactionRequest{
+  string user_id = 1;
+}
+
+message FilterTransactionRequest{
+  string user_id = 1;
+  string student_id = 2;
+  string supervisor_id = 3;
+  string asset_id = 4;
+  string date = 5;
+}
+
+message TransactionResponse{
+  repeated Transaction transaction = 1;
+}
+
+message Transaction{
+  string transaction_id = 1;
+  string transaction_type = 2;
+  string student_name = 3;
+  string supervisor_name = 4;
+  string asset_name = 5;
+  string asset_id = 6;
+  string loan_date = 7;
+  string returning_supervisor_name = 8;
+  string return_date = 9;
+}
